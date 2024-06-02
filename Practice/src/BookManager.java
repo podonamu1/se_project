@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class BookManager {
@@ -26,6 +27,7 @@ public class BookManager {
         return new ArrayList<Book>(books); 
     }
     
+    // Id로 책 삭제
     public void removeBookById(String id) {
         Iterator<Book> iterator = books.iterator();
         while (iterator.hasNext()) {
@@ -84,5 +86,96 @@ public class BookManager {
         }
         return booksFound;
     }
+    
+    /* 
+     *	여기서부터 Binary Search를 위한 함수
+     *  1. Binary Search를 하기 전에 Id로 sort
+     *	2. 해당 Id를 바탕으로 Binary Search 진행
+     *	3. 찾아진 아이템을 리턴
+     */
 
+    // Id 를 기반으로 books arrayList를 Sort하는 함수
+    public void sortById() {
+    	books.sort(new Comparator<Book>() {
+			
+			@Override
+			public int compare(Book book1, Book book2) {
+				String bookId1 = book1.getId();
+				String bookId2 = book2.getId();
+				
+				int result = bookId1.compareTo(bookId2);
+				return result;
+			}
+		});
+    }
+    
+    /*
+    // author를 기반으로 books arrayList를 Sort하는 함수
+    public void sortByAuthor() {
+    	books.sort(new Comparator<Book>() {
+			
+			@Override
+			public int compare(Book book1, Book book2) {
+				String bookAuthor1 = book1.getAuthor();
+				String bookAuthor2 = book2.getAuthor();
+				
+				int result = bookAuthor1.compareTo(bookAuthor2);
+				return result;
+			}
+		});
+    }
+    
+    // Title을 기반으로 books arrayList를 Sort하는 함수
+    public void sortByTitle() {
+    	books.sort(new Comparator<Book>() {
+			
+			@Override
+			public int compare(Book book1, Book book2) {
+				String bookTitle1 = book1.getTitle();
+				String bookTitle2 = book2.getTitle();
+				
+				int result = bookTitle1.compareTo(bookTitle2);
+				return result;
+			}
+		});
+    }
+    
+    // 출판 연도를 기반으로 books arrayList를 Sort하는 함수
+    public void sortByYearOfPublication() {
+    	books.sort(new Comparator<Book>() {
+			
+			@Override
+			public int compare(Book book1, Book book2) {
+				int result = book1.getYearOfPublication() - book2.getYearOfPublication();
+				return result;
+			}
+		});
+    }
+    */
+    
+    // Id로 binary search를 이용해서 book 찾기
+    public Book search_bs(String id) {
+    	int minIndex = 0;
+    	int maxIndex = books.size() - 1;
+    	
+    	// books 배열을 Id를 기준으로 Sort한다.
+    	sortById();
+    	
+    	// binary search를 수행한다.
+    	while (minIndex <= maxIndex) {
+    		int middleIndex = (minIndex + maxIndex) / 2;
+    		
+    		int result = books.get(middleIndex).getId().compareTo(id);
+    		
+    		if (result < 0) {
+    			minIndex = middleIndex + 1;
+    		} else if (result > 0) {
+    			maxIndex = middleIndex - 1;
+    		} else {
+    			return books.get(middleIndex);
+    		}
+    	}
+    	
+    	return null;
+    }
 }
