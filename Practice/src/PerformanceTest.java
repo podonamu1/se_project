@@ -74,9 +74,11 @@ public class PerformanceTest {
 		long binarySearchTime = test.testBinarySearch();
 		
 		if (basicSearchTime < binarySearchTime) {
-			System.out.println("기본 Search가 Binary Search보다 " + (binarySearchTime - basicSearchTime) + " 나노초만큼 빠르다.");
+			double elapsedSeconds = (binarySearchTime - basicSearchTime) / 1000000000.0;
+			System.out.println("기본 Search가 Binary Search보다 " + elapsedSeconds + " 초만큼 빠르다.");
 		} else {
-			System.out.println("Binary Search가 기본 Search보다 " + (basicSearchTime - binarySearchTime) + " 나노초만큼 빠르다.");
+			double elapsedSeconds = (basicSearchTime - binarySearchTime);
+			System.out.println("Binary Search가 기본 Search보다 " + elapsedSeconds + " 초만큼 빠르다.");
 		}
 	}
 }
