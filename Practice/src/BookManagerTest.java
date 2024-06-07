@@ -25,7 +25,7 @@ class BookManagerTest {
 	    bookManager.addBook(book5);
 	}
 
-
+	// 책을 추가하는 것이 잘 수행되는지 테스트
 	@Test
 	void testAddBook() {
 		System.out.println("testAddBook 시작");
@@ -42,6 +42,7 @@ class BookManagerTest {
         System.out.println("testAddBook 통과");
 	}
 
+	// 중복 책 추가시 오류 메시지 테스트
 	@Test
 	void testAddDuplicatedBook() {
 		System.out.println("testAddDuplicatedBook 시작");
@@ -56,6 +57,7 @@ class BookManagerTest {
         System.out.println("testAddDuplicatedBook 통과");
 	}
 	
+	// 책을 포함하고 있는지 여부를 테스트
 	@Test
 	void testGetAllBooks() {
 		System.out.println("testGetAllBooks 시작");
@@ -71,6 +73,7 @@ class BookManagerTest {
 		
 	}
 
+	// 아이디에 의한 책 제거 기능 테스트
 	@Test
 	void testRemoveBookById() {
 		System.out.println("testRemoveBookById 시작");
@@ -87,6 +90,7 @@ class BookManagerTest {
         System.out.println("testRemoveBookById 통과");
 	}
 	
+	// 존재하지 않는 책 제거시 오류 메시지 띄우기 테스트
 	@Test
 	void testRemoveNonExistentBook() {
 		System.out.println("testRemoveNonExistentBook 시작");
@@ -107,6 +111,7 @@ class BookManagerTest {
         System.out.println("testRemoveNonExistentBook 통과");
 	}
 
+	// 작가 이름으로 책 검색 테스트
 	@Test
 	void testFindBooksByAuthor() {
 		System.out.println("testFindBooksByAuthor 시작");
@@ -125,6 +130,7 @@ class BookManagerTest {
         System.out.println("testFindBooksByAuthor 통과");
     }
 	
+	// 작가 이름을 책 찾기시 작가 이름이 없을 때 오류 메시지 테스트
 	@Test
 	void testFindUnknownBooksByAuthor() {
 		System.out.println("testFindUnknownBooksByAuthor 시작");
@@ -136,6 +142,7 @@ class BookManagerTest {
         System.out.println("testFindUnknownBooksByAuthor 통과");
     }
 
+	// 책 제목으로 책 검색 테스트
 	@Test
 	void testFindBooksByTitle() {
 		System.out.println("testFindBooksByTitle 시작");
@@ -153,6 +160,7 @@ class BookManagerTest {
         System.out.println("testFindBooksByTitle 통과");
 	}
 
+	// 책 제목으로 책 검색시 해당하는 책이 없을 때 오류 메시지 테스트
 	@Test
 	void testFindUnknownBooksByTitle() {
 		System.out.println("testFindUnknownBooksByTitle 시작");
@@ -164,6 +172,7 @@ class BookManagerTest {
         System.out.println("testFindUnknownBooksByTitle 통과");
     }
 	
+	// Id로 책 검색 성공한 경우 테스트
 	@Test
 	void testFindBookById() {
 		System.out.println("testFindBooksById 시작");
@@ -179,6 +188,7 @@ class BookManagerTest {
         System.out.println("testFindBooksById 통과");
 	}
 	
+	// 아이디에 해당하는 책을 보유하고 있지 않는 경우 오류 메시지 테스트
 	@Test
 	void testFindUnknownBookById() {
 		System.out.println("testFindUnknownBookById 시작");
@@ -190,6 +200,7 @@ class BookManagerTest {
         System.out.println("testFindUnknownBookById 통과");
     }
 
+	// 출판 년도로 책 찾기 테스트
 	@Test
 	void testFindBooksByYearOfPublication() {
 		System.out.println("testFindBooksByYOP 시작");
@@ -209,6 +220,7 @@ class BookManagerTest {
         System.out.println("testFindBooksByYOP 통과");
 	}
 	
+	// 아이디를 기준으로 책 정렬하기 테스트
 	@Test
 	void testSortById() {
 		System.out.println("testSortById 시작");
@@ -227,45 +239,7 @@ class BookManagerTest {
         System.out.println("testSortById 통과");
 	}
 	
-	/*
-	@Test
-	void testSortByAuthor() {
-		System.out.println("testSortByAuthor 시작");
-
-        bookManager.sortByAuthor();
-        System.out.println("sortByAuthor: " + bookManager.getAllBooks());
-        
-        String prevAuthor = "";
-        
-       for (Book b : bookManager.getAllBooks()) {
-    	   String currentAuthor = b.getAuthor();
-    	   assertTrue(currentAuthor.compareToIgnoreCase(prevAuthor) >= 0);
-    	   prevAuthor = currentAuthor;
-       }
-        
-        System.out.println("testSortByAuthor 통과");
-	}
-	
-
-	@Test
-	void testSortByTitle() {
-		System.out.println("testSortByTitle 시작");
-
-		bookManager.sortByTitle();
-		System.out.println("sortByTitle: " + bookManager.getAllBooks());
-        
-        String prevTitle = "";
-        
-       for (Book b : bookManager.getAllBooks()) {
-    	   String currentTitle = b.getTitle();
-    	   assertTrue(currentTitle.compareToIgnoreCase(prevTitle) >= 0);
-    	   prevTitle = currentTitle;
-       }
-        
-        System.out.println("testSortByTitle 통과");
-	}
-	 */
-	
+	// 보유중인 책에 대한 이진 탐색을 수행하는 테스트
 	@Test
 	void testSearch_bs() {
 		System.out.println("testSearch_bs 시작");
@@ -281,6 +255,7 @@ class BookManagerTest {
         System.out.println("testSearch_bs 통과");
 	}
 	
+	// 보유하고 있지 않은 책에 대한 이진 탐색 수행시 오류 메시지 발생 테스트
 	@Test
 	void testUnknownSearch_bs() {
 		System.out.println("testFindUnknownBookById 시작");
