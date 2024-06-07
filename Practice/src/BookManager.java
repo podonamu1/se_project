@@ -109,49 +109,6 @@ public class BookManager {
 		});
     }
     
-    /*
-    // author를 기반으로 books arrayList를 Sort하는 함수
-    public void sortByAuthor() {
-    	books.sort(new Comparator<Book>() {
-			
-			@Override
-			public int compare(Book book1, Book book2) {
-				String bookAuthor1 = book1.getAuthor();
-				String bookAuthor2 = book2.getAuthor();
-				
-				int result = bookAuthor1.compareTo(bookAuthor2);
-				return result;
-			}
-		});
-    }
-    
-    // Title을 기반으로 books arrayList를 Sort하는 함수
-    public void sortByTitle() {
-    	books.sort(new Comparator<Book>() {
-			
-			@Override
-			public int compare(Book book1, Book book2) {
-				String bookTitle1 = book1.getTitle();
-				String bookTitle2 = book2.getTitle();
-				
-				int result = bookTitle1.compareTo(bookTitle2);
-				return result;
-			}
-		});
-    }
-    
-    // 출판 연도를 기반으로 books arrayList를 Sort하는 함수
-    public void sortByYearOfPublication() {
-    	books.sort(new Comparator<Book>() {
-			
-			@Override
-			public int compare(Book book1, Book book2) {
-				int result = book1.getYearOfPublication() - book2.getYearOfPublication();
-				return result;
-			}
-		});
-    }
-    */
     
     // Id로 binary search를 이용해서 book 찾기
     public Book search_bs(String id) {
