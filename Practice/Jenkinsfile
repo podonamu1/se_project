@@ -1,33 +1,50 @@
 pipeline {
     agent any
+
+    environment {
+        // 설정해야 할 환경 변수
+        RESULTS_DIR = "C:\Users\User"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                // Git 리포지토리에서 코드를 체크아웃합니다.
+                git branch: 'main', url: 'https://github.com/podonamu1/se_projrct.git'
             }
         }
+
         stage('Build') {
             steps {
-                bat 'javac -encoding UTF-8 -d classes Practice/src/**/*.java'
+                // 빌드 단계
+                script {
+                    // Maven을 사용한 예제
+                    bat 'mvn clean install'
+                }
             }
         }
-	stage('Test') {
-	    steps {
-	        def classpath = "classes;lib/;
-	        bat 'java -cp ${classpath} PerformanceTest > test_results.txt'
-	    }
-	}
 
+        stage('Performance Test') {
+            steps {
+                // 성능 테스트 실행
+                script {
+                    bat 'java -n -t PerformanceTest -l $RESULTS_DIR/test-results.jtl'
+                }
+            }
+        }
     }
+
     post {
         always {
-            archiveArtifacts 'test_results.txt'
-        }
-        failure {
-            echo 'Build or test failed'
-        }
-        success {
-            echo 'Build and test succeeded'
+            // 테스트 결과를 아티팩트로 저장
+            archiveArtifacts artifacts: "$RESULTS_DIR/test-results.jtl", allowEmptyArchive: true
+
+            // 콘솔 로그를 파일로 저장
+            script {
+                def logFile = "${env.RESULTS_DIR}/console.log"
+                writeFile file: logFile, text: currentBuild.rawBuild.getLog(1000).join("\n")
+                archiveArtifacts artifacts: logFile, allowEmptyArchive: true
+            }
         }
     }
 }
