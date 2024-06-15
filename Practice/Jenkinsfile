@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // 설정해야 할 환경 변수
-        RESULTS_DIR = "C:\Users\User"
+        RESULTS_DIR = "C:/Users/User"
     }
 
     stages {
