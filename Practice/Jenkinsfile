@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,20 +9,21 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'javac -encoding UTF-8 -d classes Practice/src/**/*.java'
+                bat 'javac -encoding UTF-8 -d . Practice/src/Book.java Practice/src/BookManager.java Practice/src/PerformanceTest.java'
             }
         }
-        stage('Test') {
+        stage('PerformanceTest') {
             steps {
-                // 실제 경로로 대체
-                def classpath = "classes;lib;C:\\Users\\User\\eclipse\\plugins\\junit-platform-console-standalone-1.7.1.jar"
-                bat "java -cp %classpath% org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt"
+                dir('Practice/src') {
+                    bat 'java PerformanceTest > test_results.txt'
+                }
             }
         }
     }
+
     post {
         always {
-            archiveArtifacts 'test_results.txt'
+            archiveArtifacts 'Practice/src/test_results.txt'
         }
         failure {
             echo 'Build or test failed'
