@@ -1,50 +1,43 @@
 pipeline {
     agent any
-
-    environment {
-        // 설정해야 할 환경 변수
-        RESULTS_DIR = "C:/Users/User"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                // Git 리포지토리에서 코드를 체크아웃합니다.
-                git branch: 'main', url: 'https://github.com/podonamu1/se_projrct.git'
-            }
+                // 소스코드 체크아웃
+                checkout scm
+            }    
         }
-
         stage('Build') {
             steps {
-                // 빌드 단계
-                script {
-                    // Maven을 사용한 예제
-                    bat 'mvn clean install'
-                }
+            // Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
+            // window 일 경우 bat
+            sh 'javac -encoding UTF-8 -d classes Practice/src/**/*.java'
             }
-        }
-
-        stage('Performance Test') {
+        }     
+        stage('Test') {
             steps {
-                // 성능 테스트 실행
-                script {
-                    bat 'java -n -t PerformanceTest -l $RESULTS_DIR/test-results.jtl'
-                }
+                // JUnit 5 테스트 실행을 위한 classpath 설정
+                def classpath = "classes;lib/; 
+                path/to/eclipse/plugins/junit-platform-console-standalone1.7.1.jar"
+                
+                // JUnit 5 테스트 실행
+                bat 'java -cp classes;lib/; path/to/eclipse/plugins/junitplatform-console-standalone-1.7.1.jar 
+                org.junit.platform.console.ConsoleLauncher --scan-classpath > 
+                test_results.txt' 
             }
         }
-    }
-
+    } 
     post {
         always {
-            // 테스트 결과를 아티팩트로 저장
-            archiveArtifacts artifacts: "$RESULTS_DIR/test-results.jtl", allowEmptyArchive: true
-
-            // 콘솔 로그를 파일로 저장
-            script {
-                def logFile = "${env.RESULTS_DIR}/console.log"
-                writeFile file: logFile, text: currentBuild.rawBuild.getLog(1000).join("\n")
-                archiveArtifacts artifacts: logFile, allowEmptyArchive: true
-            }
+            // 테스트 결과 파일을 저장하기 위해 아카이브
+            archiveArtifacts 'test_results.txt'
+        }
+        failure {
+            echo ‘Build or test failed'
+        }
+        success {
+            echo ‘Build and test succeeded'
         }
     }
 }
+
