@@ -13,7 +13,7 @@ pipeline {
         }
 		stage('Test') {
 		    steps {
-		        def classpath = "classes;lib/;C:\Users\eclipse\java-2024-03\eclipse\plugins\org.eclipse.equinox.launcher_1.6.700.v20240213-1244.jar"
+		        def classpath = "classes;lib/;path/to/eclipse/java-2024-03/eclipse/plugins/org.eclipse.equinox.launcher_1.6.700.v20240213-1244.jar"
 		        bat 'java -cp ${classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt'
 		    }
 		}
